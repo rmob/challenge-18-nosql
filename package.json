@@ -1,0 +1,27 @@
+{
+  "name": "challenge-18-nosql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rmob/challenge-18-nosql.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rmob/challenge-18-nosql/issues"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^6.0.13"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.9"
+  },
+  "homepage": "https://github.com/rmob/challenge-18-nosql#readme"
+}

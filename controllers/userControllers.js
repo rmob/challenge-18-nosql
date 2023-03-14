@@ -39,7 +39,7 @@ deleteUser(req, res) {
 
 addFriend(req, res) {
     User.findOneAndUpdate(
-        {_id: req.params.friendId},
+        {_id: req.params.userId},
         { $addToSet: { friends: req.body }},
         { runValidators: true, new: true}
     )
@@ -56,12 +56,15 @@ addFriend(req, res) {
  },
 
 removeFriend(req, res) {
+    console.log('removeFriend route hit')
     User.findOneAndUpdate(
         { _id: req.params.userId},
-        { $pull: { friends: { friendId: req.params.friendId } } },
-        { runValidators: true, new: true })
+        { $pull: { friends: req.params.friendId }}
+       
+    )
     .then((dbUserData) => res.json(dbUserData))
-    .catch((err) => res.status(500).json(err));
+    .catch((err) => res.status(500).json(err))
+    
 },
 
 };

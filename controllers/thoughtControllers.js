@@ -38,10 +38,14 @@ module.exports = {
       });
   },
 
-  //    updateThought(req, res) {
-  //     Thought.findOneAndUpdate
-  // }
-
+updateThought(req, res) {
+    Thought.findOneAndUpdate(
+        {_id: req.params.thoughtId},
+        { $set: req.body})
+      .then((dbThoughtData) => res.json(dbThoughtData))
+      .catch((err) => res.status(500).json(err));
+  },
+  
   addReaction(req, res) {
     Thought.findOneAndUpdate(
       { _id: req.params.thoughtId },

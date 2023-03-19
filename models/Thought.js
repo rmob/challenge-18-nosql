@@ -1,22 +1,35 @@
 const { Schema, model} = require('mongoose');
 
+const currentTime = () => {
+  const stamp = new Intl.DateTimeFormat("en-us", {
+    dateStyle: 'short',
+    timeStyle: 'short',
+  })
+  return stamp.format(Date.now()) 
+}
+
 const reactionSchema = new Schema({
   reactionId: {
     type: Schema.Types.ObjectId,
     ref: 'thought', 
   },
+
   reactionBody: {
     type: String,
     required: true,
     max: 280,
   },
+
   username: {
     type: String,
     required: true,
   },
+
   createdAt: {
     type: Date,
-    default: Date.now 
+    default: Date.now,
+    get: currentTime
+    
   },
 },
 {
@@ -33,10 +46,13 @@ const thoughtSchema = new Schema({
     minlength: 1,
     maxlength: 280
   },
+
   createdAt: {
     type: Date,
-    default: Date.now 
+    default: currentTime(Date.now())
+    
   },
+
   username: {
     type: String,
     required: true
@@ -48,7 +64,8 @@ const thoughtSchema = new Schema({
       virtuals: true,
     },
     id: false,
-});
+}
+);
 
 thoughtSchema.virtual('reactionCount').get(function () {
   return this.reactions.length;
@@ -56,13 +73,20 @@ thoughtSchema.virtual('reactionCount').get(function () {
 
 // reactionSchema.virtual.apply('formatReactionDate').get(function () {
 //   const reactionTime = Date.now
-//   return reactionTime.getDate().getDay().getFullYear().getHours().getMinutes()
+//   return `${reactionTime.getDate()}`
 // })
 
-// thoughtSchema.virtual.apply('formatThoughtDate').get(function () {
-//   const thoughtTime = Date.now
-//   return thoughtTime.getDate().getDay().getFullYear().getHours().getMinutes()
-// })
+thoughtSchema.virtual('formatedTimeStamp').get(function () {
+  const stamp = new Intl.DateTimeFormat("en-us", {
+    dateStyle: 'short',
+    timeStyle: 'short',
+  })
+  return stamp.format(Date.now()) 
+}
+ 
+)
+
+
 
 const Thought = model('thought', thoughtSchema)
 

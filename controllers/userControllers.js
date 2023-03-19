@@ -16,7 +16,7 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  // create a new user
+  
   createUser(req, res) {
     User.create(req.body)
       .then((dbUserData) => res.json(dbUserData))
@@ -25,7 +25,7 @@ module.exports = {
 
 
 updateUser(req, res) {
-    User.updateOne(req.body)
+    User.findOneAndUpdate({ _id: req.params.userId }, {$set: req.body})
       .then((dbUserData) => res.json(dbUserData))
       .catch((err) => res.status(500).json(err));
   },
@@ -39,7 +39,7 @@ deleteUser(req, res) {
 
 addFriend(req, res) {
     User.findOneAndUpdate(
-        {_id: req.params.userId},
+        { _id: req.params.userId },
         { $addToSet: { friends: req.body }},
         { runValidators: true, new: true}
     )
@@ -58,7 +58,7 @@ addFriend(req, res) {
 removeFriend(req, res) {
     console.log('removeFriend route hit')
     User.findOneAndUpdate(
-        { _id: req.params.userId},
+        { _id: req.params.userId },
         { $pull: { friends: req.params.friendId }}
        
     )
